@@ -9,9 +9,9 @@
 
 ## About AnilistHeaven
 
-AnilisHeaven is a project I decided to make because I love Anilist and wanna do something fun for the community and improve my skills. It will have many options such as:
+AnilistHeaven is a project I decided to make because I love Anilist and wanna do something fun for the community and improve my skills. It will have many options such as:
 
-- Challanges.
+- Challenges.
 - Badge generation.
 - Your list management (Later versions).
 - Profile design tools (Still thinkiing about this one).
