@@ -161,6 +161,9 @@ i {
         bottom: -25px;
         display: none;
 	}
+    #navbarSupportedContent{
+        padding-bottom: 12px;
+    }
 	.hori-selector .left:before{
 		left: -25px;
 		top: -25px;
