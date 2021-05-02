@@ -144,24 +144,31 @@ i {
 		border-radius: 0;
 		border-top-left-radius: 25px;
 		border-bottom-left-radius: 25px;
+		border-top-right-radius: 25px;
+		border-bottom-right-radius: 25px;
 	}
 	.hori-selector .left,
 	.hori-selector .right{
 		right: 10px;
+        display: none;
 	}
 	.hori-selector .left{
-		top: -25px;
+        top: -25px;
 		left: auto;
+        display: none;
 	}
 	.hori-selector .right{
-		bottom: -25px;
+        bottom: -25px;
+        display: none;
 	}
 	.hori-selector .left:before{
 		left: -25px;
 		top: -25px;
+        display: none;
 	}
 	.hori-selector .right:before{
-		bottom: -25px;
+        bottom: -25px;
 		left: -25px;
+        display: none;
 	}
 }
