@@ -1,5 +1,5 @@
 <template>
-    <div>This is About page</div>
+    <div class="color-main-color">This is About page</div>
 </template>
 <script>
 export default {

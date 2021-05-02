@@ -37653,7 +37653,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("This is About page")])
+  return _c("div", { staticClass: "color-main-color" }, [
+    _vm._v("This is About page")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37712,8 +37714,8 @@ var render = function() {
         attrs: {
           xmlns: "http://www.w3.org/2000/svg",
           "xmlns:xlink": "http://www.w3.org/1999/xlink",
-          width: "470",
-          height: "290",
+          width: "570",
+          height: "390",
           viewBox: "0 0 470 290"
         }
       },
@@ -37731,11 +37733,7 @@ var render = function() {
         _vm._v(" "),
         _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
           _c("path", {
-            attrs: {
-              fill: "#FFF",
-              d: "M0 0H1366V800H0z",
-              transform: "translate(-448 -157)"
-            }
+            attrs: { d: "M0 0H1366V800H0z", transform: "translate(-448 -157)" }
           }),
           _vm._v(" "),
           _c(
@@ -37916,7 +37914,13 @@ var render = function() {
           )
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("h1", { staticClass: "text-center text-white" }, [
+      _vm._v("PAGE NOT FOUND")
+    ])
   ])
 }
 var staticRenderFns = []
