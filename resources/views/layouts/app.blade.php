@@ -26,7 +26,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-custom navbar-mainbg">
-        <router-link to="/" exact class="navbar-brand navbar-logo ml-5" href="#">{{  config('app.name', 'AnilistHeaven') }}</router-link>
+        <router-link to="/" exact class="navbar-brand ml-5" href="#"><img src="{{ asset('assets/images/anilistheaven.svg') }}" height="50" alt=""></router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
