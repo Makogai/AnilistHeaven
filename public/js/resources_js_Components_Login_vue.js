@@ -141,6 +141,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'login',
   data: function data() {
@@ -153,6 +157,7 @@ __webpack_require__.r(__webpack_exports__);
       register: {
         username: '',
         email: '',
+        image_path: '',
         password: '',
         password_confirmation: ''
       },
@@ -190,6 +195,21 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this.errors_register = error.response.data.errors;
       });
+    },
+    onChange: function onChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.register.image_path = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     },
     loginUser: function loginUser() {
       var _this2 = this;
@@ -481,203 +501,225 @@ var render = function() {
                   _vm._m(1)
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "sign-up-form" }, [
-                  _c("div", { staticClass: "group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "label", attrs: { for: "username" } },
-                      [_vm._v("Username")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.register.username,
-                          expression: "register.username"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        name: "register-username",
-                        id: "username",
-                        type: "text",
-                        "data-type": "username",
-                        placeholder: "Enter your username"
-                      },
-                      domProps: { value: _vm.register.username },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+                  _c("div", { staticClass: "sign-up-form" }, [
+                    _c("div", { staticClass: "group" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "username" } },
+                        [_vm._v("Username")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.register.username,
+                            expression: "register.username"
                           }
-                          _vm.$set(
-                            _vm.register,
-                            "username",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors_register.username
-                      ? _c("span", { staticClass: "text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors_register.username[0]))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "label", attrs: { for: "email" } },
-                      [_vm._v("Email Address")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.register.email,
-                          expression: "register.email"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        name: "register-email",
-                        id: "email",
-                        type: "email",
-                        "data-type": "email",
-                        placeholder: "Enter your email address"
-                      },
-                      domProps: { value: _vm.register.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          name: "register-username",
+                          id: "username",
+                          type: "text",
+                          "data-type": "username",
+                          placeholder: "Enter your username"
+                        },
+                        domProps: { value: _vm.register.username },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.register,
+                              "username",
+                              $event.target.value
+                            )
                           }
-                          _vm.$set(_vm.register, "email", $event.target.value)
                         }
-                      }
-                    }),
+                      }),
+                      _vm._v(" "),
+                      _vm.errors_register.username
+                        ? _c("span", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(_vm.errors_register.username[0]))
+                          ])
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm.errors_register.email
-                      ? _c("span", { staticClass: "text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors_register.email[0]))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "label", attrs: { for: "pass" } },
-                      [_vm._v("Password")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.register.password,
-                          expression: "register.password"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        name: "register-password",
-                        id: "pass",
-                        type: "password",
-                        "data-type": "password",
-                        placeholder: "Create your password"
-                      },
-                      domProps: { value: _vm.register.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    _c("div", { staticClass: "group" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "email" } },
+                        [_vm._v("Email Address")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.register.email,
+                            expression: "register.email"
                           }
-                          _vm.$set(
-                            _vm.register,
-                            "password",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors_register.password
-                      ? _c("span", { staticClass: "text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors_register.password[0]))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "label", attrs: { for: "pass" } },
-                      [_vm._v("Repeat Password")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.register.password_confirmation,
-                          expression: "register.password_confirmation"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        name: "register-password_confirmation",
-                        id: "pass",
-                        type: "password",
-                        "data-type": "password",
-                        placeholder: "Repeat your password"
-                      },
-                      domProps: { value: _vm.register.password_confirmation },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          name: "register-email",
+                          id: "email",
+                          type: "email",
+                          "data-type": "email",
+                          placeholder: "Enter your email address"
+                        },
+                        domProps: { value: _vm.register.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.register, "email", $event.target.value)
                           }
-                          _vm.$set(
-                            _vm.register,
-                            "password_confirmation",
-                            $event.target.value
-                          )
                         }
-                      }
-                    }),
+                      }),
+                      _vm._v(" "),
+                      _vm.errors_register.email
+                        ? _c("span", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(_vm.errors_register.email[0]))
+                          ])
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm.errors_register.password_confirmation
-                      ? _c("span", { staticClass: "text-danger" }, [
-                          _vm._v(
-                            _vm._s(_vm.errors_register.password_confirmation[0])
-                          )
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "group" }, [
-                    _c("input", {
-                      staticClass: "button bg-logo",
-                      attrs: { type: "submit", value: "Sign Up" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.registerUser($event)
+                    _c("div", { staticClass: "group" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "pass" } },
+                        [_vm._v("Password")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.register.password,
+                            expression: "register.password"
+                          }
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          name: "register-password",
+                          id: "pass",
+                          type: "password",
+                          "data-type": "password",
+                          placeholder: "Create your password"
+                        },
+                        domProps: { value: _vm.register.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.register,
+                              "password",
+                              $event.target.value
+                            )
+                          }
                         }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(2)
+                      }),
+                      _vm._v(" "),
+                      _vm.errors_register.password
+                        ? _c("span", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(_vm.errors_register.password[0]))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "group" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "pass" } },
+                        [_vm._v("Repeat Password")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.register.password_confirmation,
+                            expression: "register.password_confirmation"
+                          }
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          name: "register-password_confirmation",
+                          id: "pass",
+                          type: "password",
+                          "data-type": "password",
+                          placeholder: "Repeat your password"
+                        },
+                        domProps: { value: _vm.register.password_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.register,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors_register.password_confirmation
+                        ? _c("span", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.errors_register.password_confirmation[0]
+                              )
+                            )
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "group" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "pass" } },
+                        [_vm._v("Image")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "file" },
+                        on: { change: _vm.onChange }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors_register.image_path
+                        ? _c("span", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(_vm.errors_register.image_path[0]))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "group" }, [
+                      _c("input", {
+                        staticClass: "button bg-logo",
+                        attrs: { type: "submit", value: "Sign Up" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.registerUser($event)
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 ])
               ])
             ])
@@ -703,16 +745,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "foot color-logo" }, [
       _c("a", { attrs: { href: "#" } }, [_vm._v("Forgot Password?")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "foot" }, [
-      _c("label", { attrs: { for: "tab-1 color-logo" } }, [
-        _vm._v("Already Member?")
-      ])
     ])
   }
 ]

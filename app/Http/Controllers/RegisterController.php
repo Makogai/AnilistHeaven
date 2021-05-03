@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-
+use App\Models\FileUpload;
+use Image;
 class RegisterController extends Controller
 {
 
@@ -14,13 +15,26 @@ class RegisterController extends Controller
         $request->validate([
             'username' => ['required', 'unique:users', 'min:3'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['min:6', 'required', 'confirmed']
+            'password' => ['min:6', 'required', 'confirmed'],
         ]);
 
+        if($request->get('image_path')) {
+            $image = $request->get('image_path');
+          $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+          Image::make($request->get('image_path'))->save(public_path('images/').$name);
+        }
+        $user= new User();
+        $user->image_path = $name;
+        $user->username = $request->username;
+        $user->email = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->save();
+/*
         User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+            'password' => Hash::make($request->password),
+            'image_path' => $name
+        ]);*/
     }
 }

@@ -56,6 +56,7 @@
                   <a href="#">Forgot Password?</a>
                 </div>
               </div>
+              <form enctype="multipart/form-data">
               <div class="sign-up-form">
                 <div class="group">
                   <label for="username" class="label">Username</label>
@@ -110,6 +111,11 @@
                   <span v-if="errors_register.password_confirmation" class="text-danger">{{ errors_register.password_confirmation[0] }}</span>
                 </div>
                 <div class="group">
+                  <label for="pass" class="label">Image</label>
+                  <input type="file" class="form-control" v-on:change="onChange">
+                  <span v-if="errors_register.image_path" class="text-danger">{{ errors_register.image_path[0] }}</span>
+                </div>
+                <div class="group">
                   <input
                     @click.prevent="registerUser"
                     type="submit"
@@ -117,10 +123,8 @@
                     value="Sign Up"
                   />
                 </div>
-                <div class="foot">
-                  <label for="tab-1 color-logo">Already Member?</label>
-                </div>
               </div>
+</form>
             </div>
           </div>
         </div>
@@ -141,15 +145,18 @@ export default {
             register:{
                 username: '',
                 email: '',
+                image_path: '',
                 password:'',
                 password_confirmation: ''
             },
+
             errors_login: [],
             errors_register: []
         }
     },
     methods:{
         registerUser(){
+
             this.errors_register = [];
             axios.post('/api/registerUser', this.register).then(() =>{
                 console.log("Registered");
@@ -170,6 +177,20 @@ export default {
                 this.errors_register = error.response.data.errors;
             })
         },
+          onChange(e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+            },
+            createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.register.image_path = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
         loginUser(){
             this.errors_login = [];
             axios.get('/sanctum/csrf-cookie').then(response => {
