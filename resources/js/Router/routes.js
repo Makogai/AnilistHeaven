@@ -39,13 +39,6 @@ const routes = [
         path: "/",
         component: () => import('../Pages/Home.vue'),
         name: "home",
-        beforeEnter: (to, form, next) => {
-            axios.get('/api/authenticated').then(() =>{
-                next()
-            }).catch(()=>{
-                return next({name: 'login'})
-            })
-        }
     },
     {
         path: "/about",
@@ -56,6 +49,18 @@ const routes = [
         path: "/login",
         component: () => import('../Components/Login'),
         name: 'login'
+    },
+    {
+        path: "/profile",
+        component: () => import('../Pages/Profile'),
+        name: 'profile',
+        beforeEnter: (to, form, next) => {
+            axios.get('/api/authenticated').then(() =>{
+                next()
+            }).catch(()=>{
+                return next({name: 'profile'})
+            })
+        }
     }
 ]
 

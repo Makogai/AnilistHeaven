@@ -1954,6 +1954,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.$router.push({
           name: 'login'
         });
+
+        document.querySelectorAll('.nav-item')[4].click();
       });
     }
   },
@@ -2042,16 +2044,7 @@ var routes = [{
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Home.vue */ "./resources/js/Pages/Home.vue"));
   },
-  name: "home",
-  beforeEnter: function beforeEnter(to, form, next) {
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/authenticated').then(function () {
-      next();
-    })["catch"](function () {
-      return next({
-        name: 'login'
-      });
-    });
-  }
+  name: "home"
 }, {
   path: "/about",
   component: function component() {
@@ -2064,6 +2057,21 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Components_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Components/Login */ "./resources/js/Components/Login.vue"));
   },
   name: 'login'
+}, {
+  path: "/profile",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Profile */ "./resources/js/Pages/Profile.vue"));
+  },
+  name: 'profile',
+  beforeEnter: function beforeEnter(to, form, next) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/authenticated').then(function () {
+      next();
+    })["catch"](function () {
+      return next({
+        name: 'profile'
+      });
+    });
+  }
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -54621,7 +54629,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_NotFound_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_About_vue":1,"resources_js_Components_Login_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_NotFound_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_About_vue":1,"resources_js_Components_Login_vue":1,"resources_js_Pages_Profile_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

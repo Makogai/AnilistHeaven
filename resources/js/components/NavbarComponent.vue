@@ -62,6 +62,7 @@ export default {
                 this.$forceUpdate
                 this.$store.commit('loggedIn', false)
                 this.$router.push({name: 'login'})
+                document.querySelectorAll('.nav-item')[4].click()
             })
         }
     },

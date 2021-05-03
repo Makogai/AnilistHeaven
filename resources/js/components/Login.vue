@@ -63,7 +63,7 @@
                     v-model="register.username"
                     name="register-username"
                     id="username"
-                    type="email"
+                    type="text"
                     class="input"
                     data-type="username"
                     placeholder="Enter your username"
@@ -153,6 +153,19 @@ export default {
             this.errors_register = [];
             axios.post('/api/registerUser', this.register).then(() =>{
                 console.log("Registered");
+                Swal.fire({
+                title: 'Success!',
+                html: 'Hey there ' +'<b>'+ this.register.username + '</b>' +', You have successfully created your account. You will be automatically logged in.',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+                })
+                 axios.post('/login',{email: this.register.email, password: this.register.password}).then((res) =>{
+                this.$router.push({ name: 'home' });
+                console.log(res.data)
+            })
+                this.$store.commit('loggedIn', true)
+                document.querySelectorAll('.nav-item')[0].click()
+
             }).catch((error) => {
                 this.errors_register = error.response.data.errors;
             })
@@ -166,6 +179,7 @@ export default {
                 console.log(res.data)
                 this.$store.commit('loggedIn', true)
                 this.$forceUpdate();  // Notice we have to use a $ here
+                document.querySelectorAll('.nav-item')[0].click()
             }).catch((error) => {
                 this.$store.commit('loggedIn', false)
                 this.errors_login = error.response.data.errors;

@@ -167,6 +167,26 @@ __webpack_require__.r(__webpack_exports__);
       this.errors_register = [];
       axios.post('/api/registerUser', this.register).then(function () {
         console.log("Registered");
+        Swal.fire({
+          title: 'Success!',
+          html: 'Hey there ' + '<b>' + _this.register.username + '</b>' + ', You have successfully created your account. You will be automatically logged in.',
+          icon: 'success',
+          confirmButtonText: 'Cool'
+        });
+        axios.post('/login', {
+          email: _this.register.email,
+          password: _this.register.password
+        }).then(function (res) {
+          _this.$router.push({
+            name: 'home'
+          });
+
+          console.log(res.data);
+        });
+
+        _this.$store.commit('loggedIn', true);
+
+        document.querySelectorAll('.nav-item')[0].click();
       })["catch"](function (error) {
         _this.errors_register = error.response.data.errors;
       });
@@ -188,6 +208,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$forceUpdate(); // Notice we have to use a $ here
 
+
+          document.querySelectorAll('.nav-item')[0].click();
         })["catch"](function (error) {
           _this2.$store.commit('loggedIn', false);
 
@@ -480,7 +502,7 @@ var render = function() {
                       attrs: {
                         name: "register-username",
                         id: "username",
-                        type: "email",
+                        type: "text",
                         "data-type": "username",
                         placeholder: "Enter your username"
                       },
