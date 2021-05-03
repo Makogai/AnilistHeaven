@@ -36,12 +36,7 @@
   --font-family-sans-serif: "Nunito", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-.bg-main-color{
-    background-color: #0b1622;
-}
-.color-main-color{
-    color: #97a7bb;
-}
+
 *,
 *::before,
 *::after {
@@ -49,7 +44,6 @@
 }
 
 html {
-    background-color: #0b1622;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
