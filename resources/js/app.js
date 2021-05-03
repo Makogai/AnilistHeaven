@@ -6,7 +6,9 @@ window.Vue = require('vue').default;
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
+import { VueSpinners } from '@saeris/vue-spinners'
 
+Vue.use(VueSpinners)
 Vue.use(VueRouter);
 
 

@@ -18,16 +18,16 @@
             <li class="nav-item">
                 <router-link to="/about" class="nav-link" href="javascript:void(0);"><i class="far fa-question-circle"></i>About</router-link>
             </li>
-            @auth
+            {{-- @auth --}}
             <li class="nav-item">
-                <router-link to="/profile" class="nav-link" href="javascript:void(0);"><i class="fas fa-user"></i>Profile</router-link>
+                <router-link to="/profile" class="nav-link" v-if="user" href="javascript:void(0);"><i class="fas fa-user"></i>Profile</router-link>
             </li>
-            @endauth
-            @guest
+            {{-- @endauth --}}
+            {{-- @guest --}}
             <li class="nav-item">
-                <router-link to="/login" class="nav-link" href="javascript:void(0);"><i class="fas fa-sign-in-alt"></i>Login</router-link>
+                <router-link to="/login" class="nav-link" v-if="!user" href="javascript:void(0);"><i class="fas fa-sign-in-alt"></i>Login</router-link>
             </li>
-            @endguest
+            {{-- @endguest --}}
         </ul>
     </div>
 </nav>
