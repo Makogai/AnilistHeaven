@@ -3,6 +3,8 @@
 // import NotFound from "../Pages/NotFound";
 // import Login from "../Components/Login";
 
+import axios from 'axios'
+
 // export default{
 //     mode: 'history',
 //     linkActiveClass: "active",
@@ -36,7 +38,14 @@ const routes = [
     {
         path: "/",
         component: () => import('../Pages/Home.vue'),
-        name: "home"
+        name: "home",
+        beforeEnter: (to, form, next) => {
+            axios.get('/api/authenticated').then(() =>{
+                next()
+            }).catch(()=>{
+                return next({name: 'login'})
+            })
+        }
     },
     {
         path: "/about",

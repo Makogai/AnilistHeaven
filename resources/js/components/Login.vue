@@ -129,7 +129,6 @@
   </div>
 </template>
 <script>
-console.log("LOGIN PAGE HAHAHHAHAHAH");
 export default {
     name: 'login',
     data(){
@@ -137,7 +136,7 @@ export default {
             login:{
                 email: '',
                 password:'',
-                remember: 0
+                remember: false
             },
             register:{
                 username: '',
@@ -152,7 +151,6 @@ export default {
     methods:{
         registerUser(){
             this.errors_register = [];
-            console.log(this.register);
             axios.post('/api/registerUser', this.register).then(() =>{
                 console.log("Registered");
             }).catch((error) => {
@@ -161,13 +159,15 @@ export default {
         },
         loginUser(){
             this.errors_login = [];
-            console.log(this.login);
             axios.get('/sanctum/csrf-cookie').then(response => {
     // Login...
             axios.post('/login', this.login).then((res) =>{
-                this.$router.push({ name: 'Home' });
-                // console.log(res.data)
+                this.$router.push({ name: 'home' });
+                console.log(res.data)
+                this.$store.commit('loggedIn', true)
+                this.$forceUpdate();  // Notice we have to use a $ here
             }).catch((error) => {
+                this.$store.commit('loggedIn', false)
                 this.errors_login = error.response.data.errors;
             })
 });

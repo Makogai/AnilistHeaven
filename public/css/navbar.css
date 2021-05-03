@@ -109,7 +109,29 @@ i {
 	bottom: 0;
     left: -25px;
 }
-
+.logout-button{
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+    height: 50px;
+    width: 50px;
+    background-color: #112233;
+    box-shadow: 3px 3px 5px black;
+    border-radius: 50%;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.logout-button:hover{
+    background-color: #162c42;
+}
+.logout-button i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #96a6ba;
+    font-size: 1.2rem;
+}
 
 @media(min-width: 992px){
 	.navbar-expand-custom {
@@ -161,6 +183,12 @@ i {
         bottom: -25px;
         display: none;
 	}
+
+
+
+    .logout-link{
+        cursor: pointer;
+    }
     #navbarSupportedContent{
         padding-bottom: 12px;
     }

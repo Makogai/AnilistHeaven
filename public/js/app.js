@@ -1876,6 +1876,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1911,6 +1918,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'navbar',
   data: function data() {
@@ -1922,9 +1936,32 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (res) {
-      _this.user = res.data;
+      _this.user = res.data; // this.loggedIn = true;
+
+      _this.$store.commit('loggedIn', true);
     });
-  }
+  },
+  methods: {
+    logout: function logout() {
+      var _this2 = this;
+
+      axios.post('/api/logoutUser').then(function () {
+        // this.loggedIn = false;
+        _this2.$forceUpdate;
+
+        _this2.$store.commit('loggedIn', false);
+
+        _this2.$router.push({
+          name: 'login'
+        });
+      });
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
+    loggedIn: function loggedIn(state) {
+      return state.loggedIn;
+    }
+  }))
 });
 
 /***/ }),
@@ -1964,11 +2001,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 // import Home from "../Pages/Home";
 // import About from "../Pages/About";
 // import NotFound from "../Pages/NotFound";
 // import Login from "../Components/Login";
-// export default{
+ // export default{
 //     mode: 'history',
 //     linkActiveClass: "active",
 //     routes:[
@@ -1991,6 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
 //         }
 //     ]
 // }
+
 var routes = [{
   path: "*",
   component: function component() {
@@ -2002,7 +2042,16 @@ var routes = [{
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Home.vue */ "./resources/js/Pages/Home.vue"));
   },
-  name: "home"
+  name: "home",
+  beforeEnter: function beforeEnter(to, form, next) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/authenticated').then(function () {
+      next();
+    })["catch"](function () {
+      return next({
+        name: 'login'
+      });
+    });
+  }
 }, {
   path: "/about",
   component: function component() {
@@ -2038,14 +2087,20 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
   state: {
-    count: 0
+    count: 0,
+    loggedIn: false
   },
   mutations: {
-    INCREMENT: function INCREMENT(state) {
-      state.count++;
+    loggedIn: function loggedIn(state, payload) {
+      state.loggedIn = payload;
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    loggedIn: function loggedIn(state) {
+      return state.loggedIn;
+    }
+  }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
@@ -37724,156 +37779,177 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "nav",
-    { staticClass: "navbar navbar-expand-custom navbar-mainbg" },
-    [
-      _c(
-        "router-link",
-        {
-          staticClass: "navbar-brand ml-5",
-          attrs: { to: "/", exact: "", href: "#" }
-        },
-        [
-          _c("img", {
-            attrs: {
-              src: "/assets/images/anilistheaven.svg",
-              height: "45",
-              alt: ""
+  return _c("div", [
+    _c(
+      "nav",
+      { staticClass: "navbar navbar-expand-custom navbar-mainbg" },
+      [
+        _c(
+          "router-link",
+          {
+            staticClass: "navbar-brand ml-5",
+            attrs: { to: "/", exact: "", href: "#" }
+          },
+          [
+            _c("img", {
+              attrs: {
+                src: "/assets/images/anilistheaven.svg",
+                height: "45",
+                alt: ""
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarSupportedContent" }
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav ml-auto mr-5" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: "/", exact: "", href: "javascript:void(0);" }
+                    },
+                    [_c("i", { staticClass: "fas fa-home" }), _vm._v("Home")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item home-link" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: "/challenges", href: "javascript:void(0);" }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-mountain" }),
+                      _vm._v("Challenges")
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: "/badges", href: "javascript:void(0);" }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-ribbon" }),
+                      _vm._v("Badges")
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: "/about", href: "javascript:void(0);" }
+                    },
+                    [
+                      _c("i", { staticClass: "far fa-question-circle" }),
+                      _vm._v("About")
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _vm.loggedIn
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: "/profile", href: "javascript:void(0);" }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-user" }),
+                          _vm._v(_vm._s(_vm.user.username))
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  !_vm.loggedIn
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: "/login", href: "javascript:void(0);" }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-sign-in-alt" }),
+                          _vm._v("Login")
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ])
+          ]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm.loggedIn
+      ? _c(
+          "a",
+          {
+            staticClass: "logout-button",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.logout($event)
+              }
             }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "collapse navbar-collapse",
-          attrs: { id: "navbarSupportedContent" }
-        },
-        [
-          _c("ul", { staticClass: "navbar-nav ml-auto mr-5" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: { to: "/", exact: "", href: "javascript:void(0);" }
-                  },
-                  [_c("i", { staticClass: "fas fa-home" }), _vm._v("Home")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: { to: "/challenges", href: "javascript:void(0);" }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-mountain" }),
-                    _vm._v("Challenges")
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: { to: "/badges", href: "javascript:void(0);" }
-                  },
-                  [_c("i", { staticClass: "fas fa-ribbon" }), _vm._v("Badges")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: { to: "/about", href: "javascript:void(0);" }
-                  },
-                  [
-                    _c("i", { staticClass: "far fa-question-circle" }),
-                    _vm._v("About")
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                _vm.user
-                  ? _c(
-                      "router-link",
-                      {
-                        staticClass: "nav-link",
-                        attrs: { to: "/profile", href: "javascript:void(0);" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-user" }),
-                        _vm._v(_vm._s(_vm.user.username))
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item" },
-              [
-                !_vm.user
-                  ? _c(
-                      "router-link",
-                      {
-                        staticClass: "nav-link",
-                        attrs: { to: "/login", href: "javascript:void(0);" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-sign-in-alt" }),
-                        _vm._v("Login")
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
-          ])
-        ]
-      )
-    ],
-    1
-  )
+          },
+          [_c("i", { staticClass: "fas fa-sign-in-alt" })]
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -54500,6 +54576,18 @@ var index = {
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

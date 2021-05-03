@@ -141,7 +141,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-console.log("LOGIN PAGE HAHAHHAHAHAH");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'login',
   data: function data() {
@@ -149,7 +148,7 @@ console.log("LOGIN PAGE HAHAHHAHAHAH");
       login: {
         email: '',
         password: '',
-        remember: 0
+        remember: false
       },
       register: {
         username: '',
@@ -166,7 +165,6 @@ console.log("LOGIN PAGE HAHAHHAHAHAH");
       var _this = this;
 
       this.errors_register = [];
-      console.log(this.register);
       axios.post('/api/registerUser', this.register).then(function () {
         console.log("Registered");
       })["catch"](function (error) {
@@ -177,15 +175,22 @@ console.log("LOGIN PAGE HAHAHHAHAHAH");
       var _this2 = this;
 
       this.errors_login = [];
-      console.log(this.login);
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         // Login...
         axios.post('/login', _this2.login).then(function (res) {
           _this2.$router.push({
-            name: 'Home'
-          }); // console.log(res.data)
+            name: 'home'
+          });
+
+          console.log(res.data);
+
+          _this2.$store.commit('loggedIn', true);
+
+          _this2.$forceUpdate(); // Notice we have to use a $ here
 
         })["catch"](function (error) {
+          _this2.$store.commit('loggedIn', false);
+
           _this2.errors_login = error.response.data.errors;
         });
       });

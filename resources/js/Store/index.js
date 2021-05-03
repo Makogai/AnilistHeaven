@@ -6,13 +6,19 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state:{
         count: 0,
+        loggedIn: false,
     },
     mutations:{
-        INCREMENT(state){
-            state.count++
+        loggedIn(state, payload){
+            state.loggedIn = payload;
         },
     },
-    actions: {}
+    actions: {},
+    getters: {
+        loggedIn: state => {
+          return state.loggedIn
+        }
+      }
 })
 
 export default store;
