@@ -129,7 +129,9 @@
   </div>
 </template>
 <script>
+console.log("LOGIN PAGE HAHAHHAHAHAH");
 export default {
+    name: 'login',
     data(){
         return{
             login:{
@@ -162,7 +164,7 @@ export default {
             console.log(this.login);
             axios.get('/sanctum/csrf-cookie').then(response => {
     // Login...
-            axios.post('/api/loginUser', this.login).then((res) =>{
+            axios.post('/login', this.login).then((res) =>{
                 this.$router.push({ name: 'Home' });
                 // console.log(res.data)
             }).catch((error) => {

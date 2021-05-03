@@ -26,12 +26,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 </head>
 <body>
-    <div id="app">
-        @include('layouts.navbar')
+    <div id="app" class="bg-main-color">
+        {{-- @include('layouts.navbar')
 
         <main class="p-4 bg-main-color">
             @yield('content')
-        </main>
+        </main> --}}
+
+        <app></app>
     </div>
+
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
