@@ -46,4 +46,22 @@ class LoginController extends Controller
         Auth::logout();
     }
 
+    public function user(Request $request){
+        // $user_id = $request->user()->id;
+        // $user = User::find($user_id)->with('roles');
+        // $user = auth()->user();
+        $user = User::with('role')->find(Auth::id());
+
+        $data = [
+            'username' => $user->username,
+            'image_path' => $user->image_path,
+            'email' => $user->email,
+            'role' => $user->role->name,
+            'register_date' => $user->created_at->format('Y-m-d')
+        ];
+
+        return $data;
+
+    }
+
 }

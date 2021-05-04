@@ -5,6 +5,10 @@ html{
 .bg-main-color{
     background-color: #0b1622!important;
 }
+
+.bg-main-color-light{
+    background-color: #152232!important;
+}
 .color-main-color{
     color: rgb(150, 166, 186)!important;
 }
@@ -13,4 +17,21 @@ html{
 }
 .bg-logo{
     background-color:#02a9ff!important;
+}
+.color-gold{
+    background-image: repeating-linear-gradient(45deg, #ffa288, #f1d7a3, #ad7e1e);
+  text-align: center;
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* font-size: 24px; */
+  font-size: 1.5rem;
+  animation: rainbow 8s ease infinite;
+  /* text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); */
+}
+
+@keyframes rainbow {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 25%}
+    100%{background-position:0% 50%}
 }
