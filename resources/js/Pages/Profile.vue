@@ -14,7 +14,6 @@ export default {
         };
     },
     mounted() {
-        console.log(this.$store.getters.loggedIn);
         axios.get("/api/user").then(res => {
             this.user = res.data;
         });

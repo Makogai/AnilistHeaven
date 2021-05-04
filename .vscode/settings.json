@@ -1,4 +1,5 @@
 {
     "discord.enabled": false,
-    "VSCord.enabled": false
+    "VSCord.enabled": false,
+    "deepscan.enable": true
 }

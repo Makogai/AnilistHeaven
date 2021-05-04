@@ -35,7 +35,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    console.log(this.$store.getters.loggedIn);
     axios.get("/api/user").then(function (res) {
       _this.user = res.data;
     });

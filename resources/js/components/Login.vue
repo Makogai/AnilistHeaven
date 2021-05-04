@@ -166,10 +166,15 @@ export default {
                 icon: 'success',
                 confirmButtonText: 'Cool'
                 })
-                 axios.post('/login',{email: this.register.email, password: this.register.password}).then((res) =>{
+
+                    axios.get('/sanctum/csrf-cookie').then(response =>{
+                        axios.post('/login',{email: this.register.email, password: this.register.password, remember: true}).then((res) =>{
                 this.$router.push({ name: 'home' });
-                console.log(res.data)
+                                this.$store.commit('loggedIn', true)
+                this.$forceUpdate();  // Notice we have to use a $ here
             })
+                    })
+
                 this.$store.commit('loggedIn', true)
                 document.querySelectorAll('.nav-item')[0].click()
 

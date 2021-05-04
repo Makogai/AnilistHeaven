@@ -178,15 +178,21 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success',
           confirmButtonText: 'Cool'
         });
-        axios.post('/login', {
-          email: _this.register.email,
-          password: _this.register.password
-        }).then(function (res) {
-          _this.$router.push({
-            name: 'home'
-          });
+        axios.get('/sanctum/csrf-cookie').then(function (response) {
+          axios.post('/login', {
+            email: _this.register.email,
+            password: _this.register.password,
+            remember: true
+          }).then(function (res) {
+            _this.$router.push({
+              name: 'home'
+            });
 
-          console.log(res.data);
+            _this.$store.commit('loggedIn', true);
+
+            _this.$forceUpdate(); // Notice we have to use a $ here
+
+          });
         });
 
         _this.$store.commit('loggedIn', true);
