@@ -52,4 +52,7 @@ class User extends Authenticatable
         if($value)
             $this->attributes["image"] = is_string($value) ? $value : User::storeFile($value, "users");
     }*/
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
 }

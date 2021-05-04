@@ -37,6 +37,7 @@
     </div>
 </nav>
                 <a v-if="loggedIn" @click.prevent="logout" class="logout-button"><i class="fas fa-sign-in-alt"></i></a>
+
 </div>
 </template>
 <script>
@@ -64,7 +65,8 @@ export default {
                 this.$router.push({name: 'login'})
                 document.querySelectorAll('.nav-item')[4].click()
             })
-        }
+        },
+
     },
     computed:{
         ...mapState({
