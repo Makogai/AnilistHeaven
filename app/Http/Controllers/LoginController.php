@@ -64,4 +64,15 @@ class LoginController extends Controller
 
     }
 
+    public function isAdmin(Request $request){
+        // $user_id = $request->user()->id;
+        // $user = User::find($user_id)->with('roles');
+        // $user = auth()->user();
+        $user = User::find(Auth::id());
+
+        $admin = $user->role_id == 1 ? 1 : 0;
+        return $admin;
+
+    }
+
 }

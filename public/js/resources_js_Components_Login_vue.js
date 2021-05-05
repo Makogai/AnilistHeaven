@@ -145,21 +145,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'login',
+  name: "login",
   data: function data() {
     return {
       login: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         remember: false
       },
       register: {
-        username: '',
-        email: '',
-        image_path: '',
-        password: '',
-        password_confirmation: ''
+        username: "",
+        email: "",
+        image_path: "",
+        password: "",
+        password_confirmation: ""
       },
       errors_login: [],
       errors_register: []
@@ -170,34 +240,36 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.errors_register = [];
-      axios.post('/api/registerUser', this.register).then(function () {
+      axios.post("/api/registerUser", this.register).then(function () {
         console.log("Registered");
         Swal.fire({
-          title: 'Success!',
-          html: 'Hey there ' + '<b>' + _this.register.username + '</b>' + ', You have successfully created your account. You will be automatically logged in.',
-          icon: 'success',
-          confirmButtonText: 'Cool'
+          title: "Success!",
+          html: "Hey there " + "<b>" + _this.register.username + "</b>" + ", You have successfully created your account. You will be automatically logged in.",
+          icon: "success",
+          confirmButtonText: "Cool"
         });
-        axios.get('/sanctum/csrf-cookie').then(function (response) {
-          axios.post('/login', {
+        axios.get("/sanctum/csrf-cookie").then(function (response) {
+          axios.post("/login", {
             email: _this.register.email,
             password: _this.register.password,
             remember: true
           }).then(function (res) {
             _this.$router.push({
-              name: 'home'
+              name: "home"
             });
 
-            _this.$store.commit('loggedIn', true);
+            _this.$store.commit("loggedIn", true);
+
+            _this.$store.commit("loggedUser", res.data.username);
 
             _this.$forceUpdate(); // Notice we have to use a $ here
 
           });
         });
 
-        _this.$store.commit('loggedIn', true);
+        _this.$store.commit("loggedIn", true);
 
-        document.querySelectorAll('.nav-item')[0].click();
+        document.querySelectorAll(".nav-item")[0].click();
       })["catch"](function (error) {
         _this.errors_register = error.response.data.errors;
       });
@@ -221,23 +293,28 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.errors_login = [];
-      axios.get('/sanctum/csrf-cookie').then(function (response) {
+      axios.get("/sanctum/csrf-cookie").then(function (response) {
         // Login...
-        axios.post('/login', _this2.login).then(function (res) {
-          _this2.$router.push({
-            name: 'home'
+        axios.post("/login", _this2.login).then(function (res) {
+          axios.get("/api/user").then(function (resu) {
+            _this2.$store.commit("loggedUser", resu.data.username);
+
+            _this2.$store.commit("isAdmin", resu.data.role == "Admin" ? true : false);
           });
 
-          console.log(res.data);
+          _this2.$router.push({
+            name: "home"
+          });
 
-          _this2.$store.commit('loggedIn', true);
+          _this2.$store.commit("loggedIn", true); // vm.$forceUpdate();
+
 
           _this2.$forceUpdate(); // Notice we have to use a $ here
 
 
-          document.querySelectorAll('.nav-item')[0].click();
+          document.querySelectorAll(".nav-item")[0].click();
         })["catch"](function (error) {
-          _this2.$store.commit('loggedIn', false);
+          _this2.$store.commit("loggedIn", false);
 
           _this2.errors_login = error.response.data.errors;
         });
@@ -656,7 +733,8 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.register.password_confirmation,
-                            expression: "register.password_confirmation"
+                            expression:
+                              "\n                                            register.password_confirmation\n                                        "
                           }
                         ],
                         staticClass: "input",
@@ -742,7 +820,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "check" } }, [
       _c("span", { staticClass: "icon" }),
-      _vm._v(" Keep me Signed in")
+      _vm._v(" Keep me\n                                    Signed in")
     ])
   },
   function() {

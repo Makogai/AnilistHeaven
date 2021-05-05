@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', [LoginController::class, 'user']
 Route::middleware('auth:sanctum')->get('/authenticated', function () {
     return true;
 });
+Route::middleware('auth:sanctum')->get('/authenticatedAdmin', [LoginController::class, 'isAdmin']);
 
 Route::post('registerUser', [RegisterController::class, 'register']);
 Route::post('loginUser', [LoginController::class, 'login']);

@@ -1925,6 +1925,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'navbar',
@@ -1940,6 +1943,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.user = res.data; // this.loggedIn = true;
 
       _this.$store.commit('loggedIn', true);
+
+      _this.$store.commit('loggedUser', res.data.username);
+
+      _this.$store.commit("isAdmin", resu.data.role == "Admin" ? true : false);
+
+      _this.$forceUpdate();
     });
   },
   methods: {
@@ -1948,7 +1957,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       axios.post('/api/logoutUser').then(function () {
         // this.loggedIn = false;
-        _this2.$forceUpdate;
+        _this2.$forceUpdate();
 
         _this2.$store.commit('loggedIn', false);
 
@@ -1963,6 +1972,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
     loggedIn: function loggedIn(state) {
       return state.loggedIn;
+    },
+    loggedUser: function loggedUser(state) {
+      return state.loggedUser;
+    },
+    isAdmin: function isAdmin(state) {
+      return state.isAdmin;
     }
   }))
 });
@@ -2073,6 +2088,23 @@ var routes = [{
       });
     });
   }
+}, {
+  path: "/admin",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_admin_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/admin/Dashboard */ "./resources/js/Pages/admin/Dashboard.vue"));
+  },
+  name: 'admin',
+  beforeEnter: function beforeEnter(to, form, next) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/authenticatedAdmin').then(function (res) {
+      if (res.data == 1) next();else return next({
+        name: 'home'
+      });
+    })["catch"](function () {
+      return next({
+        name: 'home'
+      });
+    });
+  }
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -2097,17 +2129,31 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
   state: {
     count: 0,
-    loggedIn: false
+    loggedIn: false,
+    loggedUser: "",
+    isAdmin: false
   },
   mutations: {
     loggedIn: function loggedIn(state, payload) {
       state.loggedIn = payload;
+    },
+    loggedUser: function loggedUser(state, payload) {
+      state.loggedUser = payload;
+    },
+    isAdmin: function isAdmin(state, payload) {
+      state.isAdmin = payload;
     }
   },
   actions: {},
   getters: {
     loggedIn: function loggedIn(state) {
       return state.loggedIn;
+    },
+    loggedUser: function loggedUser(state) {
+      return state.loggedUser;
+    },
+    isAdmin: function isAdmin(state) {
+      return state.isAdmin;
     }
   }
 });
@@ -37908,7 +37954,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fas fa-user" }),
-                          _vm._v(_vm._s(_vm.user.username))
+                          _vm._v(_vm._s(_vm.loggedUser))
                         ]
                       )
                     : _vm._e()
@@ -37930,6 +37976,27 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fas fa-sign-in-alt" }),
                           _vm._v("Login")
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _vm.isAdmin && _vm.loggedIn
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: "/admin", href: "javascript:void(0);" }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-sign-in-alt" }),
+                          _vm._v("Admin")
                         ]
                       )
                     : _vm._e()
@@ -54630,7 +54697,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_NotFound_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_About_vue":1,"resources_js_Components_Login_vue":1,"resources_js_Pages_Profile_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_NotFound_vue":1,"resources_js_Pages_Home_vue":1,"resources_js_Pages_About_vue":1,"resources_js_Components_Login_vue":1,"resources_js_Pages_Profile_vue":1,"resources_js_Pages_admin_Dashboard_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

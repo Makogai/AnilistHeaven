@@ -22,11 +22,14 @@
             </li>
 
             <li class="nav-item">
-                <router-link to="/profile" class="nav-link" v-if="loggedIn" href="javascript:void(0);"><i class="fas fa-user"></i>{{ user.username }}</router-link>
+                <router-link to="/profile" class="nav-link" v-if="loggedIn" href="javascript:void(0);"><i class="fas fa-user"></i>{{ loggedUser }}</router-link>
             </li>
 
             <li class="nav-item">
                 <router-link to="/login" class="nav-link" v-if="!loggedIn" href="javascript:void(0);"><i class="fas fa-sign-in-alt"></i>Login</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/admin" class="nav-link" v-if="isAdmin && loggedIn" href="javascript:void(0);"><i class="fas fa-sign-in-alt"></i>Admin</router-link>
             </li>
             <!-- <li class="nav-item logout-link">
                 <a v-if="loggedIn" @click.prevent="logout" class="nav-link">Logout</a>
@@ -53,14 +56,17 @@ export default {
         axios.get('/api/user').then((res)=>{
             this.user = res.data;
             // this.loggedIn = true;
-            this.$store.commit('loggedIn', true)
+            this.$store.commit('loggedIn', true);
+            this.$store.commit('loggedUser', res.data.username);
+            this.$store.commit("isAdmin", resu.data.role == "Admin" ? true : false);
+            this.$forceUpdate();
         })
     },
     methods:{
         logout(){
             axios.post('/api/logoutUser').then(()=>{
                 // this.loggedIn = false;
-                this.$forceUpdate
+                this.$forceUpdate();
                 this.$store.commit('loggedIn', false)
                 this.$router.push({name: 'login'})
                 document.querySelectorAll('.nav-item')[4].click()
@@ -70,7 +76,9 @@ export default {
     },
     computed:{
         ...mapState({
-            loggedIn: state => state.loggedIn
+            loggedIn: state => state.loggedIn,
+            loggedUser: state => state.loggedUser,
+            isAdmin: state => state.isAdmin
         })
     }
 }

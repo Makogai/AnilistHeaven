@@ -61,6 +61,22 @@ const routes = [
                 return next({name: 'profile'})
             })
         }
+    },
+    {
+        path: "/admin",
+        component: () => import('../Pages/admin/Dashboard'),
+        name: 'admin',
+        beforeEnter: (to, form, next) => {
+            axios.get('/api/authenticatedAdmin').then((res) =>{
+                if(res.data == 1)
+                    next()
+                else
+                    return next({name: 'home'})
+
+            }).catch(()=>{
+                return next({name: 'home'})
+            })
+        }
     }
 ]
 
